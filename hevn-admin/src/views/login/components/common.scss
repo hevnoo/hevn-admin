@@ -1,0 +1,17 @@
+::v-deep .el-input__inner {
+    border: none !important;
+}
+::v-deep .el-input {
+    --el-input-border: 0;
+    --el-input-transparent-border: 0;
+    --el-input-border-color: none;
+    --el-input-hover-border: 0;
+    --el-input-hover-border-color: none;
+    --el-input-focus-border: none;
+    --el-input-focus-border-color: none;
+    //
+    // box-shadow:0 3px 5px rgb(0 0 0 / 20%);
+    // border-bottom: 1px solid var(--el-border-color);
+    border-bottom: 1px solid rgb(0, 0, 0, 0.3);
+}
+

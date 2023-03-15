@@ -1,0 +1,16 @@
+{
+  "id": "3948741",
+  "name": "hevn-admin",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "8094821",
+      "name": "translate",
+      "font_class": "translate",
+      "unicode": "e902",
+      "unicode_decimal": 59650
+    }
+  ]
+}
