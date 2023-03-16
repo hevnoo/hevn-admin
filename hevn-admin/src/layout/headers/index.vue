@@ -57,7 +57,7 @@ const changeSwitch = () => {
 <style lang="scss" scoped>
 //Headers
 .wrapper-header {
-  height: 50px;
+  height: $headHeight;
   display: flex;
   justify-content: space-between;
   align-items: center;

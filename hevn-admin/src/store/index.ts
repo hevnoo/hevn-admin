@@ -3,5 +3,7 @@ import login from '@/store/modules/login'
 import user  from './modules/user'
 import appSwitch  from './modules/appSwitch'
 import test  from './modules/test'
+import goods from './modules/goods'
+import goodsClass from './modules/goodsClass'
 
-export { login, user, appSwitch, test }
+export { login, user, appSwitch, test, goods, goodsClass }

@@ -1,6 +1,6 @@
 <template>
   <el-menu
-    :default-active="currentPath"
+    :default-active="defaultActive"
     active-text-color="#20b0ac"
     background-color="#202a40"
     text-color="#bfcbd9"
@@ -53,6 +53,9 @@ const useAppSwitch: any = appSwitch();
 let { isClose, breadKeys } = storeToRefs(useAppSwitch);
 //获取当前路径
 const currentPath = ref(router.currentRoute.value.path);
+//默认高亮的位置
+const defaultActive = ref(storage.getItem_s("pathName") || currentPath.value);
+
 //isClose收缩menu
 //breadKeys面包屑，key值刷新
 
@@ -71,9 +74,15 @@ const getName = (name: any, path: any, index: any) => {
   width: $menuWidth;
   min-height: 100vh;
   // min-height: calc(100vh - 50px);
+  //改变一级菜单鼠标经过的样式
+  --el-menu-hover-bg-color: rgb(255, 255, 255, 0.1) !important;
 }
 .el-menu--collapse {
   min-height: 100vh;
+}
+::v-deep .el-menu {
+  //改变二级菜单鼠标经过的样式
+  --el-menu-hover-bg-color: rgb(255, 255, 255, 0.1) !important;
 }
 .logo {
   width: 99.5%;
@@ -83,7 +92,7 @@ const getName = (name: any, path: any, index: any) => {
   justify-content: center;
   background-color: $menuBg;
   // background-color: #202a40;
-  border-bottom: 1px solid rgba(250, 250, 250, 0.1);
+  border-bottom: 1px solid rgba(250, 250, 250, 0.2);
   img {
     width: 35px;
     height: 35px;

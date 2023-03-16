@@ -30,18 +30,6 @@ const currentPath = ref(router.currentRoute.value.path);
 let path = ref(storage.getItem_s("pathName") || "");
 let pathName = ref(path.value.split("/")[path.value.split("/").length - 2]);
 
-//数组对象去重
-const dedupe = (arr: any) => {
-  let obj: any[] = [];
-  arr = arr.reduce((newArr: any, next: any) => {
-    obj[next.name] ? "" : (obj[next.name] = true && newArr.push(next));
-    return newArr;
-  }, []);
-  return arr;
-};
-function dedupess(array: any): any[] {
-  return Array.from(new Set(array));
-}
 //
 let init = reactive([
   {
@@ -57,26 +45,26 @@ onBeforeRouteUpdate((to, from) => {
   // console.log(toPath, fromPath);
   if (breadArr.length == 1) {
     breadArr.push({
-      name: toPath,
+      name: to.name,
       path: to.path,
     });
     // breadArr.push(toPath);
   } else if (breadArr.length == 2) {
     breadArr[1] = {
-      name: fromPath,
+      name: from.name,
       path: from.path,
     };
     breadArr.push({
-      name: toPath,
+      name: to.name,
       path: to.path,
     });
   } else if (breadArr.length == 3) {
     breadArr[1] = {
-      name: fromPath,
+      name: from.name,
       path: from.path,
     };
     breadArr[2] = {
-      name: toPath,
+      name: to.name,
       path: to.path,
     };
   }
@@ -87,7 +75,18 @@ onBeforeRouteUpdate((to, from) => {
   breadArr = dedupe(breadArr);
   storage.setItem_s("breadArr", breadArr);
 });
-
+//数组对象去重
+const dedupe = (arr: any) => {
+  let obj: any[] = [];
+  arr = arr.reduce((newArr: any, next: any) => {
+    obj[next.name] ? "" : (obj[next.name] = true && newArr.push(next));
+    return newArr;
+  }, []);
+  return arr;
+};
+function dedupess(array: any): any[] {
+  return Array.from(new Set(array));
+}
 // watch(
 //   pathName,
 //   (newVal, oldVal) => {

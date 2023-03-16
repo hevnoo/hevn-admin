@@ -6,10 +6,15 @@ var logger = require("morgan");
 const cors = require("cors");
 // const expressJWT = require("express-jwt");
 var { expressjwt: jwt } = require("express-jwt");
+const { PRIVATE_KEY } = require("./utils/constant");
 //
 var userRouter = require("./routes/user");
 var articleRouter = require("./routes/article");
 var commentRouter = require("./routes/comment");
+var goodsRouter = require("./routes/goods");
+var goodsClassRouter = require("./routes/goodsClass");
+var ordersRouter = require("./routes/orders");
+var homeRouter = require("./routes/home");
 
 var app = express();
 
@@ -25,14 +30,14 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 //
 app.use(
-  jwt({ secret: "hevn-secretKey!", algorithms: ["HS256"] }).unless({
+  jwt({ secret: PRIVATE_KEY, algorithms: ["HS256"] }).unless({
     path: [
-      "/user/getUserList",
       "/user/getMenu",
       "/user/register",
       "/user/login",
       "/goods/upImg",
       "/user/upload",
+      "goods/goodsList",
     ],
   })
 );
@@ -41,12 +46,16 @@ app.use(
 app.use("/user", userRouter);
 app.use("/article", articleRouter);
 app.use("/comment", commentRouter);
+app.use("/goods", goodsRouter);
+app.use("/goodsClass", goodsClassRouter);
+app.use("/orders", ordersRouter);
+app.use("/home", homeRouter);
 
 // catch 404 and forward to error handler
-// app.use(function (req, res, next) {
-//   next(createError(404));
-// });
-// // error handler
+app.use(function (req, res, next) {
+  next(createError(404));
+});
+// error handler
 // app.use(function (err, req, res, next) {
 //   // set locals, only providing error in development
 //   res.locals.message = err.message;
