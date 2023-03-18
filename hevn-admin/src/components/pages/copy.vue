@@ -13,35 +13,25 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, reactive, defineProps, computed } from "vue";
-import { useRoute, useRouter, onBeforeRouteUpdate } from "vue-router";
+import { ref, reactive, defineProps, computed, defineEmits } from "vue";
+import { useRoute, useRouter } from "vue-router";
 import storage from "@/utils/storage.js";
 import { storeToRefs } from "pinia";
-import { login, appSwitch, goods, orders } from "@/store";
+import { login, appSwitch, goods } from "@/store";
 const route = useRoute();
 const router = useRouter();
 // const emits = defineEmits(['currentChange'])
 // emits('currentChange', currentPage)
 const useAppSwitch: any = appSwitch();
-const useGoods: any = goods();
-const useOrders: any = orders();
 let { token, currentPage } = storeToRefs(useAppSwitch);
+const useGoods: any = goods();
 let { total, pageSize } = storeToRefs(useGoods);
-let {
-  total: orderTotal,
-  pageSize: orderPageSize,
-  orderList,
-} = storeToRefs(useOrders);
-
-//监听路由
-onBeforeRouteUpdate((to, from) => {});
 
 const totals = computed(() => {
   if (router.currentRoute.value.name === "goodsList") {
-    return total.value;
+    return total;
     // return store.state.goods.total;
   } else if (router.currentRoute.value.name == "orderList" || "collect") {
-    return orderTotal.value;
     // return store.state.order.total;
   } else {
     return 10;
@@ -49,9 +39,8 @@ const totals = computed(() => {
 });
 const pageSizes = computed(() => {
   if (router.currentRoute.value.name === "goodsList") {
-    return pageSize.value;
+    return pageSize;
   } else if (router.currentRoute.value.name == "orderList" || "collect") {
-    return orderPageSize.value;
     // return store.state.order.pageSize;
   } else {
     return 10;
@@ -61,6 +50,7 @@ const pageSizes = computed(() => {
 const currentChange = (val: any) => {
   // console.log(`当前页: ${val}`)
   // store.commit('goods/changePage', val)
+  // store.commit("appSwitch/changePage", val);
   useAppSwitch.changePage(val);
 };
 </script>

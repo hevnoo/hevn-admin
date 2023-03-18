@@ -8,7 +8,7 @@ const appSwitch = defineStore("/appSwitch", {
     total: 0,
     pageSize: 10,
     currentPage: storage.getItem_s('page') || 1,
-    //key值刷新--------
+    //key值刷新---------------
     breadKeys: 1,
     menuKeys: 1,
     dialogKeys: 1,

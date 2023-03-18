@@ -47,7 +47,6 @@ service.interceptors.request.use(
 // //响应拦截,依据响应结果进行提示。
 service.interceptors.response.use(
   (response) => {
-    // const { data, code } = response.data
     if (response.data.status === 200 || response.data.status === 201) {
       return response
     } else {

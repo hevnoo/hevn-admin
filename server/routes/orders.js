@@ -18,14 +18,12 @@ router.post("/addOrders", async (req, res, next) => {
 
 // 获取订单列表，分页
 router.get("/getOrders", async (req, res, next) => {
-  let { page } = req.query;
-  let pages = page || 1;
+  let page = Number(req.query.page || 1);
   try {
-    let totalSql = "select id from orders";
-    let t = await querySql(totalSql);
-    let total = t.length;
+    let totalSql = await querySql("select id from orders");
+    let total = totalSql.length;
     let pageSize = 10;
-    let pageSet = (pages - 1) * pageSize;
+    let pageSet = (page - 1) * pageSize;
     let sql =
       "select *,DATE_FORMAT(saleDate,'%Y-%m-%d %H:%i:%s') AS saleDate from orders order by saleDate desc limit ? offset ?";
     let result = await querySql(sql, [pageSize, pageSet]);
@@ -106,7 +104,7 @@ router.post("/deleOrders", async (req, res, next) => {
   }
 });
 
-//stock库存接口,按order表的商品名称 去goods数据表中找出对应的商品的数量。
+//stock库存接口,按orders表的商品名称 去goods数据表中找出对应的商品的数量。
 router.get("/stock", async (req, res, next) => {
   let { goodsName } = req.query;
   try {
@@ -132,14 +130,12 @@ router.post("/upStock", async (req, res, next) => {
 });
 //汇总清单
 router.get("/collect", async (req, res, next) => {
-  let { page } = req.query;
-  let pages = page || 1;
+  let page = Number(req.query.page || 1);
   try {
-    let totalSql = "select id from orders";
-    let t = await querySql(totalSql);
-    let total = t.length;
+    let totalSql = await querySql("select id from orders");
+    let total = totalSql.length;
     let pageSize = 10;
-    let pageSet = (pages - 1) * pageSize;
+    let pageSet = (page - 1) * pageSize;
     let sql =
       "select *,DATE_FORMAT(saleDate,'%Y-%m-%d %H:%i:%s') AS saleDate from orders order by saleDate desc limit ? offset ?";
     let result = await querySql(sql, [pageSize, pageSet]);

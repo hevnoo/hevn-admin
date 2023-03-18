@@ -6,6 +6,7 @@
     :border="true"
     stripe
     fit
+    @selection-change="SelectionChange"
   >
     <el-table-column type="selection" width="55" />
     <el-table-column prop="id" label="商品ID" width="70"> </el-table-column>
@@ -45,9 +46,11 @@
     </el-table-column>
   </el-table>
   <!-- 清空与批量删除 -->
-  <div style="margin-top: 20px; margin-left: 15px">
-    <el-button type="primary" @click="toggleSelection">清空</el-button>
-    <el-button @click="deleMore">批量删除</el-button>
+  <div style="margin-top: 20px; margin-left: 5px">
+    <el-button type="primary" size="small" plain @click="toggleSelection()"
+      >清空</el-button
+    >
+    <el-button size="small" plain @click="deleMore">批量删除</el-button>
   </div>
   <!-- 添加或编辑弹框 -->
   <GoodsDialog
@@ -64,7 +67,7 @@
 <script lang="ts" setup>
 import GoodsDialog from "@/views/goods/components/GoodsDialog.vue";
 import Detail from "@/views/goods/goodsList/goodsTable/detail/index.vue";
-import { ref, reactive, onMounted, computed, watch } from "vue";
+import { ref, reactive, computed, watch, toRefs } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { ElTable } from "element-plus";
 import storage from "@/utils/storage.js";
@@ -73,15 +76,24 @@ import { login, appSwitch, goods } from "@/store";
 const route = useRoute();
 const router = useRouter();
 const useAppSwitch: any = appSwitch();
-let { token, currentPage } = storeToRefs(useAppSwitch);
 const useGoods: any = goods();
+let { token, currentPage } = storeToRefs(useAppSwitch);
 let { total, pageSize, goodsList } = storeToRefs(useGoods);
 
 const tableRef: any = ref(null);
 const isDialog = ref(false);
 const isView = ref(false);
-let eventMark = ref("goodsTable"); //传事件标识，dialog子组件依据标识判断
-let form = reactive({
+//传事件标识，dialog子组件依据标识判断
+let eventMark = ref("goodsTable");
+interface formType {
+  goodsName: string;
+  goodsNumber: number;
+  goodsPrice: number;
+  goodsClass: any;
+  goods_img: any;
+  goodsDescribe: string;
+}
+let form: formType = reactive({
   goodsName: "",
   goodsNumber: 0,
   goodsPrice: 0,
@@ -121,10 +133,8 @@ const isDetail = (emi: any) => {
 const handleDelete = (index: any, row: any) => {
   const currentId = { id: row.id };
   useGoods.deleteGoods(currentId);
-  // store.dispatch("goods/deleteGoods", currentId);
 };
-//*监听并获取选中行的内容,以数组形式保存
-// const SelectionChange = (val) => {};
+
 //*批量删除
 const deleMore = () => {
   // console.log(tableRef.value.getSelectionRows())
@@ -135,43 +145,42 @@ const deleMore = () => {
     });
     const currentId = { id: idArr };
     useGoods.deleteGoods(currentId);
-    // store.dispatch("goods/deleteGoods", currentId);
   } else {
     console.log("未选中");
   }
 };
 //*清空
-const toggleSelection = (val: any) => {
+const toggleSelection = (val?: formType[]) => {
   if (val) {
     val.forEach((f: any) => {
-      tableRef.value.toggleRowSelection(f, undefined);
+      tableRef.value!.toggleRowSelection(f, undefined);
     });
   } else {
-    tableRef.value.clearSelection();
+    tableRef.value!.clearSelection();
   }
+};
+
+//*监听并获取选中行的内容,以数组形式保存
+const SelectionChange = (val: any) => {
+  // console.log(val);
 };
 </script>
 
 <style lang="scss" scoped>
 //
 .el-table {
-  box-shadow: 0 2px 12px 0 rgb(0 0 0 / 10%);
+  // box-shadow: 0 2px 12px 0 rgb(0 0 0 / 10%);
+}
+//表头
+::v-deep th {
+  // height: 42px;
+  background-color: rgb(0, 0, 0, 0.03) !important;
 }
 //表格头部 行
 ::v-deep .el-table__header {
-  height: 55px;
 }
 //每一行
 ::v-deep .el-table__row {
   height: 57px;
 }
-//编辑...按钮
-
-// ::v-deep .el-button {
-//   width: 50px;
-//   height: 28px;
-//   span {
-//     font-size: 13px;
-//   }
-// }
 </style>

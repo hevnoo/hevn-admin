@@ -37,12 +37,10 @@ app.use(
       "/user/login",
       "/goods/upImg",
       "/user/upload",
-      "goods/goodsList",
     ],
   })
 );
 //
-
 app.use("/user", userRouter);
 app.use("/article", articleRouter);
 app.use("/comment", commentRouter);

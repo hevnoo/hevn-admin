@@ -1,5 +1,6 @@
 <template>
-  <div></div>
+  <!-- 订单管理 -->
+  <router-view></router-view>
 </template>
 
 <script setup lang="ts"></script>

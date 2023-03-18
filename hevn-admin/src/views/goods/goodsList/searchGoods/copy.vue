@@ -1,7 +1,7 @@
 <template>
   <div class="wrapper-search">
-    <section class="item date">
-      <span class="name">日期：</span>
+    <div class="item date">
+      <span class="name">日期 :</span>
       <el-date-picker
         v-model="searchForm.date"
         type="daterange"
@@ -10,9 +10,9 @@
         end-placeholder="结束时间"
         clearable
       />
-    </section>
-    <section class="item classes">
-      <span class="name">商品类别：</span>
+    </div>
+    <div class="item classes">
+      <span class="name">商品类别 :</span>
       <el-select
         v-model="searchForm.goodsClass"
         placeholder="请选择分类"
@@ -25,26 +25,18 @@
           :value="item.className"
         />
       </el-select>
-    </section>
-    <section class="item goodsName">
-      <span class="name">商品名称：</span>
+    </div>
+    <div class="item goodsName">
+      <span class="name">商品名称 :</span>
       <el-input
         v-model="searchForm.goodsName"
         placeholder="请输入内容"
         clearable
       />
-    </section>
+    </div>
     <!--  -->
-    <el-button class="btn1" type="primary" @click="search">搜索</el-button>
-    <el-button class="btn2" type="danger" plain @click="clearInput"
-      >清空</el-button
-    >
-    <el-button
-      class="btn3"
-      type="success"
-      plain
-      :icon="Plus"
-      @click="addGoodsLog"
+    <el-button class="btn1" type="primary" @click="search">查询</el-button>
+    <el-button class="btn2" type="success" @click="addGoodsLog"
       >添加产品</el-button
     >
   </div>
@@ -63,7 +55,6 @@
 import GoodsDialog from "@/views/goods/components/GoodsDialog.vue";
 import { ref, reactive, onMounted, computed, watch } from "vue";
 import { useRoute, useRouter } from "vue-router";
-import { Search, Edit, Plus } from "@element-plus/icons-vue";
 import storage from "@/utils/storage.js";
 import dayjs from "dayjs";
 import { ElMessage } from "element-plus";
@@ -131,13 +122,13 @@ const isDialogGoods = (emi: any) => {
 const sendImg = (emi: any) => {
   form.goods_img = emi;
 };
-
-const clearInput = () => {
-  searchForm.date = "";
-  searchForm.goodsClass = "";
-  searchForm.goodsName = "";
-};
-
+// const confirm = () => {
+//   store.dispatch('goods/addGoods', form)
+//   setTimeout(() => {
+//     store.dispatch('goods/getGoodsList', currentPage.value)
+//   }, 500)
+//   isDialog.value = false
+// }
 watch(
   currentPage,
   (newVal, oldVal) => {
@@ -162,51 +153,58 @@ watch(
   height: 100%;
   display: flex;
   align-items: center;
-  // background-color: rgba(0, 0, 0, 0.1);
+  // padding: 20px;
+  background-color: rgba(0, 0, 0, 0.1);
 }
 .item {
-  width: 20%;
-  margin-right: 20px;
+  margin-right: 13px;
   display: flex;
   align-items: center;
-}
-
-.name {
-  width: auto;
-  //文字不换行
-  white-space: nowrap;
-}
-::v-deep .el-input {
-  flex: 1;
-}
-.btn1 {
-  margin-left: 5px;
-}
-.btn3 {
-  margin-left: 30px;
+  justify-content: space-between;
+  .name {
+    font-size: 14px;
+    color: rgba(0, 0, 0, 0.7);
+    margin-right: 7px;
+    white-space: nowrap;
+  }
 }
 //1.日期
-// .date {
-//   width: 20%;
-//   ::v-deep .el-input__wrapper {
-//     flex: 1;
-//     height: 35px;
-//   }
-// }
+.date {
+  width: 20%;
+  ::v-deep .el-input__wrapper {
+    flex: 1;
+    height: 35px;
+  }
+}
 //2.选项分类
-// .classes {
-//   width: 22%;
-//   ::v-deep .el-input {
-//     flex: 1;
-//     height: 35px;
-//   }
-// }
-// //3.商品名称
-// .goodsName {
-//   width: 22%;
-//   ::v-deep .el-input {
-//     flex: 1;
-//     height: 35px;
-//   }
-// }
+.classes {
+  width: 22%;
+  ::v-deep .el-input {
+    flex: 1;
+    height: 35px;
+  }
+}
+//3.商品名称
+.goodsName {
+  width: 22%;
+  ::v-deep .el-input {
+    flex: 1;
+    height: 35px;
+  }
+}
+
+//按钮
+.el-button {
+  width: 6%;
+  height: 35px;
+  // margin-left: 20px;
+}
+.btn1 {
+  margin-left: 15px;
+}
+.btn2,
+.btn3 {
+  width: 8%;
+  margin-left: 20px;
+}
 </style>

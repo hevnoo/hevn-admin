@@ -54,6 +54,11 @@ const router = useRouter();
   background-color: #f0f2f5;
 }
 .el-footer {
-  display: none;
+  // display: none;
+  height: $footerHeight;
+  background-color: rgb(0, 0, 0, 0.04);
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 </style>

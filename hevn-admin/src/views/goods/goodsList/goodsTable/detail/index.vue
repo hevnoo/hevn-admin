@@ -41,7 +41,7 @@
         :src="props.form.goods_img"
         alt=""
       />
-      <img v-else class="imgs" src="@/assets/logo.png" alt="" />
+      <img v-else class="imgs" src="@/assets/vue.svg" alt="" />
     </section>
     <section>
       <span>商品描述：</span>

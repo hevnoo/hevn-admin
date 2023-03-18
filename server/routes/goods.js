@@ -42,14 +42,10 @@ router.post("/addGoods", async (req, res, next) => {
 
 // 获取商品列表，可分页, page:当前页，
 router.get("/goodsList", async (req, res, next) => {
-  //   let page = Number(req.query.page || 1);
-  // let { page } = req.query;
-  let { page } = req.query;
-  page = page || 1;
+  let page = Number(req.query.page || 1);
   try {
-    let totalSql = "select id from goods";
-    let t = await querySql(totalSql);
-    let total = t.length;
+    let totalSql = await querySql("select id from goods");
+    let total = totalSql.length;
     let pageSize = 7;
     let pageSet = (page - 1) * pageSize;
     let sql = "select * from goods order by createDate desc limit ? offset ?";
@@ -61,19 +57,6 @@ router.get("/goodsList", async (req, res, next) => {
       total,
       pageSize,
     });
-  } catch (e) {
-    console.log(e);
-    next(e);
-  }
-});
-
-//获取对应ID商品，编辑按钮
-router.get("/goodsListId", async (req, res, next) => {
-  let id = req.body.id;
-  try {
-    let sql = "select * from goods where id = ?";
-    let result = await querySql(sql, [id]);
-    res.send({ status: 200, msg: "获取对应商品成功", data: result });
   } catch (e) {
     console.log(e);
     next(e);
@@ -254,7 +237,7 @@ router.post("/updateGoods", async (req, res, next) => {
     goods_img,
     goodsDescribe,
   } = req.body;
-  let { username } = req.user;
+  let { username } = req.auth;
   try {
     let user = await querySql(
       "select id,head_img,nickname from user where username = ?",
@@ -312,8 +295,7 @@ router.post("/updateGoods", async (req, res, next) => {
 // 删除商品
 router.post("/deleteGoods", async (req, res, next) => {
   let { id } = req.body;
-  // console.log(req.body);
-  let { username } = req.user;
+  let { username } = req.auth;
   try {
     let user = await querySql(
       "select id,head_img,nickname from user where username = ?",

@@ -43,7 +43,7 @@
       <el-form-item label="商品图片">
         <el-upload
           class="avatar-uploader"
-          action="http://127.0.0.1:7171/api/goods/upImg"
+          action="http://127.0.0.1:7171/goods/upImg"
           :show-file-list="false"
           :on-success="onSuccess"
           :before-upload="beforeUpload"
@@ -101,10 +101,10 @@ const emits = defineEmits(["isDialogGoods", "sendImg"]);
 const route = useRoute();
 const router = useRouter();
 const useAppSwitch: any = appSwitch();
-let { token, currentPage } = storeToRefs(useAppSwitch);
 const useGoods: any = goods();
-let { total, pageSize, goodsList } = storeToRefs(useGoods);
 const useGoodsClass: any = goodsClass();
+let { token, currentPage } = storeToRefs(useAppSwitch);
+let { total, pageSize, goodsList } = storeToRefs(useGoods);
 let { classList } = storeToRefs(useGoodsClass);
 
 const isDialog = ref(false);
@@ -121,8 +121,6 @@ let props: any = defineProps({
   form: Object,
   eventMark: String,
 });
-// const classList = computed(() => store.state.classes.classList);
-// const currentPage = computed(() => store.state.goods.currentPage);
 
 //图片
 const onSuccess = (res: any) => {

@@ -1,19 +1,19 @@
 import http from "@/api";
 
 //添加类别
-export const addClassApi = (params: any) => {
-	return http.post(`/goodsClass/addClass`,params);
+export const addGoodsClassApi = (data: any) => {
+	return http.post(`/goodsClass/addGoodsClass`,data);
 };
 //获取所有类别
-export const allClassApi = () => {
-	return http.get(`/goodsClass/allClass`);
+export const getGoodsClassApi = () => {
+	return http.get(`/goodsClass/getGoodsClass`);
 };
 //更新类别
-export const upClassApi = (params: any) => {
-	return http.post(`/goodsClass/upClass`,params);
+export const upGoodsClassApi = (data: any) => {
+	return http.post(`/goodsClass/upGoodsClass`,data);
 };
 //删除类别
-export const deleClassApi = (params: any) => {
-	return http.post(`/goodsClass/deleClass`,params);
+export const deleGoodsClassApi = (data: any) => {
+	return http.post(`/goodsClass/deleGoodsClass`,data);
 };
 
