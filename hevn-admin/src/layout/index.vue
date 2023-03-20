@@ -9,7 +9,15 @@
           <Headers></Headers>
         </el-header>
         <el-main>
-          <router-view></router-view>
+          <!-- vue动画，内容展示 -->
+          <!-- <router-view v-slot="{ Component }"
+            ><Transition name="views" mode="out-in" appear>
+              <keep-alive>
+                <component :is="Component" />
+              </keep-alive> </Transition
+          ></router-view> -->
+          <router-view class="view"></router-view>
+          <!-- <router-view :class="isLeave ? 'view-leave' : 'view'"></router-view> -->
         </el-main>
         <el-footer>
           <Footers></Footers>
@@ -24,13 +32,35 @@ import Menu from "@/layout/menu/index.vue";
 import Headers from "@/layout/headers/index.vue";
 import Footers from "@/layout/footers/index.vue";
 import { ref, computed, watch } from "vue";
-import { useRoute, useRouter, onBeforeRouteLeave } from "vue-router";
+import {
+  useRoute,
+  useRouter,
+  onBeforeRouteLeave,
+  onBeforeRouteUpdate,
+} from "vue-router";
 const route = useRoute();
 const router = useRouter();
+
+let componentsName =
+  window.location.hash.split("/")[window.location.hash.split("/").length - 1];
 // console.log(router.options.routes)
+// console.log(route.matched);
+
+let isLeave: any = ref(false);
+//监听路由
+// onBeforeRouteUpdate((to, from) => {
+//   if (to.path !== from.path && from.path) {
+//     // console.log(to.path, from.path);
+//     isLeave.value = true;
+//     setTimeout(() => {
+//       isLeave.value = false;
+//     }, 500);
+//   }
+// });
 </script>
 
 <style lang="scss" scoped>
+@import "@/layout/transform.scss";
 .el-container {
   //相对滚动
   height: 100vh;

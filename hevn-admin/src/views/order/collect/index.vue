@@ -5,7 +5,7 @@
       <span class="logo">汇总清单：</span>
     </header>
     <main class="collectTable">
-      <collectTable></collectTable>
+      <collectTable v-if="manageList"></collectTable>
     </main>
     <footer class="page">
       <Pages></Pages>
@@ -38,31 +38,31 @@ storage.setItem_s("page", currentPage.value);
 const aa = () => {
   useOrders.getManage(currentPage.value);
 };
-setTimeout(() => {
-  aa();
-}, 200);
+aa();
 
 //离开组件时将初始化分页。
 onBeforeRouteLeave((to, from) => {
   storage.removeItem_s("page");
   useAppSwitch.changePage(1);
-  // store.commit('appSwitch/changePage', 1)
 });
 //
 const info = reactive({
   page: currentPage.value || 1,
 });
+
 watch(currentPage, (newVal, oldVal) => {
   if (newVal !== oldVal) {
     useOrders.getManage(currentPage.value);
-    // store.dispatch('order/getManage', currentPage.value)
   }
 });
 </script>
 
 <style lang="scss" scoped>
 .wrapper-collect {
-  margin-top: 10px;
+  background-color: rgba(255, 255, 255, 0.9);
+  border-radius: 8px;
+  box-shadow: 0 2px 12px 0 rgb(0 0 0 / 10%);
+  padding: 20px 20px 10px 20px;
 }
 .header {
   margin-bottom: 10px;
@@ -73,8 +73,8 @@ watch(currentPage, (newVal, oldVal) => {
   }
 }
 .page {
-  margin-top: 20px;
-  margin-bottom: 30px;
+  margin-top: 25px;
+  margin-bottom: 20px;
   display: flex;
   justify-content: center;
 }

@@ -7,14 +7,15 @@ import { storeToRefs } from "pinia";
 import storage from '@/utils/storage'
 
 const router = createRouter({
-    history: createWebHashHistory(),
-    routes: [...staticRouter, ...errorRouter]
-    
-  })
+  history: createWebHashHistory(),
+  routes: [...staticRouter, ...errorRouter]
+  
+})
+
+//在index添加路由，防止刷新路由丢失！
+// refreshRoute()
 
 const getMenu = ()=>{
-  // const useLogin = login()
-  // let { menu } = useLogin
   let isRoute = true
   if (isRoute) {
     //如果为空，判断为刷新，就重新添加路由，防止刷新路由丢失！

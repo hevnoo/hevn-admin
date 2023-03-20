@@ -1,6 +1,6 @@
 import { defineStore } from "pinia"
 import storage from '@/utils/storage'
-import { loginApi, registerApi, getMenuApi } from "@/api/modules/login" 
+import { loginApi, registerApi, getMenuApi, refreshTokenApi } from "@/api/modules/login" 
 import { ElMessage } from 'element-plus'
 import router from '@/router'
 import { setTokenTime } from '@/utils/auth'
@@ -11,6 +11,8 @@ const login = defineStore("/login", {
     role: storage.getItem('role') || '',
     menu: storage.getItem('menu') || [],
     userInfo: storage.getItem("userInfo") || "{}",
+    expiresIn: storage.getItem('expiresIn') || 2 * 60 * 60 * 1000,
+    refreshToken: storage.getItem('refreshToken') || ''
   }),
   getters: {},
   actions: {
@@ -29,15 +31,25 @@ const login = defineStore("/login", {
         storage.setItem('token', data.token)
         this.role = data.role
         storage.setItem('role', data.role)
+        this.expiresIn = data.expiresIn
+        storage.setItem('expiresIn', data.expiresIn)
+        this.refreshToken = data.expiresIn
+        storage.setItem('refreshToken', data.refreshToken)
         setTimeout(()=>{
           router.push('/')
-        },700)
-        // this.setMenu(data.role)
-        setTokenTime()
+        },500)
+        this.setMenu(data.role)
+        setTokenTime() //记录登录时间
       } catch (error) {
         console.log(error)
       }
-      
+    },
+    //刷新token
+    async setRefreshToken(val :any){
+      const { data } = await refreshTokenApi(val)
+      this.token = data.token
+      storage.setItem('token', data.token)
+      ElMessage.success(data.msg)
     },
     //注册
     async setRegister(val :any){

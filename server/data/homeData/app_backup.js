@@ -7,16 +7,7 @@ const cors = require("cors");
 // const expressJWT = require("express-jwt");
 var { expressjwt: jwt } = require("express-jwt");
 const { PRIVATE_KEY } = require("./utils/constant");
-//jwt验证函数封装
-let { verifyToken } = require("./utils/modules/useJWT");
-//引入中间件
-let { mw_verifyToken } = require("./middleware/index");
-let {
-  mw_err_verifyToken,
-  mw_err_authToken,
-} = require("./middleware/modules/error");
-
-//引入路由
+//
 var userRouter = require("./routes/user");
 var articleRouter = require("./routes/article");
 var commentRouter = require("./routes/comment");
@@ -24,7 +15,7 @@ var goodsRouter = require("./routes/goods");
 var goodsClassRouter = require("./routes/goodsClass");
 var ordersRouter = require("./routes/orders");
 var homeRouter = require("./routes/home");
-//挂载服务器实例
+
 var app = express();
 
 // view engine setup
@@ -50,17 +41,7 @@ app.use(
     ],
   })
 );
-//全局中间件！！
-// app.use(mw_verifyToken);
-
-app.use(function (req, res, next) {
-  // console.log("全局");
-  //创建404错误页
-  // next(createError(404));
-  next();
-});
-
-//注册路由
+//
 app.use("/user", userRouter);
 app.use("/article", articleRouter);
 app.use("/comment", commentRouter);
@@ -69,10 +50,33 @@ app.use("/goodsClass", goodsClassRouter);
 app.use("/orders", ordersRouter);
 app.use("/home", homeRouter);
 
-//错误级中间件要写在路由之后！
-
-app.use(mw_err_authToken);
-app.use(mw_err_verifyToken);
+// catch 404 and forward to error handler
+app.use(function (req, res, next) {
+  next(createError(404));
+});
+// error handler
+// app.use(function (err, req, res, next) {
+//   // set locals, only providing error in development
+//   res.locals.message = err.message;
+//   res.locals.error = req.app.get("env") === "development" ? err : {};
+//   // render the error page
+//   res.status(err.status || 500);
+//   res.render("error");
+// });
+app.use(function (err, req, res, next) {
+  console.log(err);
+  if (err.name === "UnauthorizedError") {
+    //  这个需要根据自己的业务逻辑来处理
+    res.status(401).send({ code: -1, msg: "token验证失败" });
+  } else {
+    // 设置局部变量，仅在开发中提供错误
+    res.locals.message = err.message;
+    res.locals.error = req.app.get("env") === "development" ? err : {};
+    // 呈现错误页
+    res.status(err.status || 500);
+    res.render("error");
+  }
+});
 
 // 监听7171端口
 app.listen(7171, () => {

@@ -3,6 +3,7 @@ import { addOrdersApi, getOrdersApi, searchOrdersApi, upOrdersApi, deleOrdersApi
 import { ElMessage } from 'element-plus'
 import router from '@/router'
 import storage from '@/utils/storage'
+import { sortOrders, getSpanArr } from "@/hooks/modules/useOrders";
 //使用另一个store，这里用于获取当前分页页码。
 import { storeToRefs } from "pinia";
 import  { appSwitch } from '@/store'
@@ -14,7 +15,8 @@ const orders = defineStore("/orders", {
     pageSize: 1,
     stock: 0,
     collectList: [], //汇总清单
-    manageList: []
+    manageList: [],  //合并后的清单
+    spanArr: [] //合并数
   }),
   getters: {},
   actions: {
@@ -32,11 +34,10 @@ const orders = defineStore("/orders", {
     //获取搜索订单列表,分页
     async getSearchOrder(val: any){
         const { data } =  await searchOrdersApi(val)
+        this.orderList = data.data
+        this.total = data.total
+        this.pageSize = data.pageSize
         ElMessage.success(data.msg)
-        //重新请求完整数据
-        const useAppSwitch: any = appSwitch();
-        let { currentPage } = storeToRefs(useAppSwitch);
-        await this.getOrder(currentPage.value)
     },
     //添加订单
     async addOrder(val: any){
@@ -85,10 +86,11 @@ const orders = defineStore("/orders", {
         this.pageSize = data.pageSize
         // ElMessage.success(data.msg)
     },
-    //出货清单，模块管理的分类管理。
+    //合并后的汇总清单
     async getManage(val: any){
         const { data } =  await getCollectApi(val)
-        this.manageList = data.data
+        this.manageList = sortOrders(data.data)
+        this.spanArr = getSpanArr(this.manageList)
         this.total = data.total
         this.pageSize = data.pageSize
         // ElMessage.success(data.msg)

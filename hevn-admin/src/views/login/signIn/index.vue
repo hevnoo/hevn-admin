@@ -99,7 +99,7 @@ const signIn = async () => {
   await formRef.value.validate((valid: any, fields: any): any => {
     if (valid) {
       useLogin.setLogin(ruleForm);
-      useLogin.setMenu(role.value);
+      // useLogin.setMenu(role.value);
     } else {
       console.log("error submit!", fields);
       return false;

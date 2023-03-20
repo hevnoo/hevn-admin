@@ -11,7 +11,6 @@ const vipPermission = require("../data/loginData/vip_permission.json");
 // 获取菜单列表
 router.get("/getMenu", (req, res, next) => {
   let role = req.query.role;
-  // let menu = menuList;
   try {
     if (role === "admin") {
       res.send({ status: 200, msg: "admin成功", data: adminPermission });
@@ -52,11 +51,14 @@ router.post("/login", async (req, res, next) => {
         });
         if (username === "admin" || role === "admin") {
           //分权限，如果是admin，那就发送admin的标识，，否则发普通vip标识。
+          // token过期后，需要靠refreshToken来重新获取token。这里赋值username
           res.send({
             status: 200,
             msg: "登录成功",
             token,
             role,
+            expiresIn: EXPIRESD,
+            refreshToken: username,
           });
         } else {
           res.send({
@@ -64,9 +66,28 @@ router.post("/login", async (req, res, next) => {
             msg: "登录成功",
             token,
             role,
+            expiresIn: EXPIRESD,
+            refreshToken: username,
           });
         }
       }
+    }
+  } catch (e) {
+    console.log(e);
+    next(e);
+  }
+});
+
+//刷新token的接口，用于无感登录。
+router.post("/refreshToken", (req, res, next) => {
+  let { refreshToken } = req.body;
+  let username = req.auth || refreshToken;
+  try {
+    if (refreshToken) {
+      let token = jwt.sign({ username }, PRIVATE_KEY, {
+        expiresIn: EXPIRESD,
+      });
+      res.send({ status: 200, msg: "刷新token成功", token });
     }
   } catch (e) {
     console.log(e);

@@ -1,6 +1,6 @@
 <template>
   <!-- 订单列表 -->
-  <div class="wrapper" v-show="orderList">
+  <div class="wrapper-orderList" v-show="orderList">
     <header class="orderHeader">
       <orderHeader></orderHeader>
     </header>
@@ -51,8 +51,11 @@ onBeforeRouteLeave((to, from) => {
 </script>
 
 <style lang="scss" scoped>
-.wrapper {
-  margin-top: 10px;
+.wrapper-orderList {
+  background-color: rgba(255, 255, 255, 0.9);
+  border-radius: 8px;
+  box-shadow: 0 2px 12px 0 rgb(0 0 0 / 10%);
+  padding: 20px;
 }
 .orderHeader {
   width: 100%;
@@ -64,7 +67,8 @@ onBeforeRouteLeave((to, from) => {
 .orderTable {
 }
 .pages {
-  width: 100%;
+  margin-top: 20px;
+  margin-bottom: 20px;
   display: flex;
   justify-content: center;
 }

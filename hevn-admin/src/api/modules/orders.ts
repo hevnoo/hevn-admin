@@ -22,7 +22,7 @@ export const deleOrdersApi = (data: any) => {
 };
 //stock库存接口,按orders表的商品名称 去goods数据表中找出对应的商品的数量。
 export const stockApi = (data: any) => {
-	return http.get(`/orders/stock`, { params: data });
+	return http.get(`/orders/stock`, { params: {goodsName: data} });
 };
 //与订单响应的goods库存更新。
 export const upStockApi = (data: any) => {

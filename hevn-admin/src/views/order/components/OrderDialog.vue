@@ -95,36 +95,24 @@ const confirm = () => {
     //根据标识区分父组件
     if (props.eventMark === "orderHeader") {
       useOrders.getStock(props.info.goodsName);
-      //   store.dispatch("order/getStock", props.info.goodsName);
-
-      //   const stock: any = computed(() => stock.value);
       // 点击添加按钮时，先按order商品名称去goods数据表中找出对应的商品的数量；
       //然后，判断商品数量是否 > 销售数量。条件满足就放行，否则提示库存不足。
       setTimeout(() => {
-        if (
-          stock.value.goodsNumber !== 0 &&
-          stock.value.goodsNumber >= props.info.saleNumber
-        ) {
+        if (stock.value !== 0 && stock.value >= props.info.saleNumber) {
           useOrders.addOrder(props.info);
-          //   store.dispatch("order/addOrder", props.info);
           //更新goods
-          let num = stock.value.goodsNumber - props.info.saleNumber;
+          let num = stock.value - props.info.saleNumber;
           useOrders.upStock({
             num: num,
-            goodsName: props.info?.goodsName,
+            goodsName: props.info.goodsName,
           });
-          //   store.dispatch("order/upStock", {
-          //     num: num,
-          //     goodsName: props.info.goodsName,
-          //   });
         } else {
-          ElMessage.warning(`库存不足！仅剩 ${stock.value.goodsNumber} 件商品`);
+          ElMessage.warning(`库存不足！仅剩 ${stock.value} 件商品`);
         }
       }, 500);
       //
     } else if (props.eventMark === "orderTable") {
       useOrders.upOrder(props.info);
-      //   store.dispatch("order/upOrder", props.info);
     } else {
       console.log("未知的事件标识");
     }

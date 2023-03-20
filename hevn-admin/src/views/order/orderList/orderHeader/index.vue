@@ -4,6 +4,7 @@
       class="input"
       v-model="infoSearch.clientName"
       placeholder="请输入姓名查询"
+      clearable
     >
       <template #append>
         <el-button class="btn" @click="search()">搜索</el-button>
@@ -35,18 +36,24 @@ const useGoods: any = goods();
 const useOrders: any = orders();
 let { token, currentPage } = storeToRefs(useAppSwitch);
 let { goodsList } = storeToRefs(useGoods);
-let { total, orderList, stock } = storeToRefs(useOrders);
+let { total, orderList } = storeToRefs(useOrders);
 
 let isDialog = ref(false);
 const eventMark = ref("orderHeader"); //传事件标识，dialog子组件依据标识判断
 let isSearch = ref(false); //搜索状态标识.
-const info = reactive({
+interface infoType {
+  goodsName: any;
+  saleNumber: number;
+  clientName: any;
+  goodsPrice: number;
+}
+const info: infoType = reactive({
   goodsName: null,
   saleNumber: 0,
   clientName: null,
   goodsPrice: 0,
 });
-const infoSearch = reactive({
+const infoSearch: any = reactive({
   clientName: null,
   page: currentPage.value || 1,
 });
@@ -55,12 +62,10 @@ const search = () => {
   if (!infoSearch.clientName) {
     isSearch.value = false;
     useOrders.getOrder(currentPage.value);
-    // store.dispatch("order/getOrder", currentPage.value);
   } else {
     isSearch.value = true; //开启搜索状态标识
     infoSearch.page = currentPage.value;
     useOrders.getSearchOrder(infoSearch);
-    // store.dispatch("order/getSearchOrder", infoSearch);
     isSearch.value = false;
   }
 };
@@ -81,10 +86,8 @@ watch(
         isSearch.value = false;
         infoSearch.page = currentPage.value;
         useOrders.getSearchOrder(infoSearch);
-        // store.dispatch("order/getSearchOrder", infoSearch);
       } else {
         useOrders.getOrder(currentPage.value);
-        // store.dispatch("order/getOrder", currentPage.value);
       }
     }
   }
@@ -121,6 +124,6 @@ watch(
 }
 //
 .addBtn {
-  margin-right: 50px;
+  margin-right: 100px;
 }
 </style>

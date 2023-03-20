@@ -15,3 +15,7 @@ export const getMenuApi = (data: any) => {
 	return http.get('/user/getMenu', data); // 正常 post json 请求  ==>  application/json
 };
 
+// * 刷新token
+export const refreshTokenApi = (data: any) => {
+	return http.post('/user/refreshToken', data); // 正常 post json 请求  ==>  application/json
+};

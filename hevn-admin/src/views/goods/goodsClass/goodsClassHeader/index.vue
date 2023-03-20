@@ -4,6 +4,7 @@
       class="input"
       v-model="info.className"
       placeholder="请输入分类名称"
+      clearable
     >
       <template #append>
         <el-button class="btn" @click="adds()">添加分类</el-button>

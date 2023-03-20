@@ -44,7 +44,7 @@ router.get("/getOrders", async (req, res, next) => {
 router.get("/searchOrders", async (req, res, next) => {
   let { page, clientName } = req.query;
   try {
-    let totalSql = "select id from order where clientName like ?";
+    let totalSql = "select id from orders where clientName like ?";
     let t = await querySql(totalSql, ["%" + clientName + "%"]);
     let total = t.length;
     let pageSize = 8;
@@ -110,7 +110,9 @@ router.get("/stock", async (req, res, next) => {
   try {
     let sql = "select goodsNumber from goods where goodsName = ?";
     let result = await querySql(sql, [goodsName]);
-    res.send({ status: 200, msg: "操作成功", data: result[0] });
+    // console.log(result[0].goodsNumber);
+    //输出一个数字goodsNumber
+    res.send({ status: 200, msg: "操作成功", data: result[0].goodsNumber });
   } catch (e) {
     console.log(e);
     next(e);

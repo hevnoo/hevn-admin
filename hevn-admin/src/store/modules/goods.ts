@@ -34,6 +34,8 @@ const goods = defineStore("/goods", {
     async getSearchGoods(val:any ){
         const { data } =  await searchApi(val)
         this.goodsList = data.data
+        this.total = data.total
+        this.pageSize = data.pageSize
         ElMessage.success(data.msg)
     },
     //添加商品
@@ -43,7 +45,7 @@ const goods = defineStore("/goods", {
         //重新请求完整数据
         const useAppSwitch: any = appSwitch();
         let { currentPage } = storeToRefs(useAppSwitch);
-        await this.getGoodsList(currentPage.value)
+        this.getGoodsList(currentPage.value)
     },
     //更新商品
     async updateGoods(val:any ){
@@ -52,7 +54,7 @@ const goods = defineStore("/goods", {
         //重新请求完整数据
         const useAppSwitch: any = appSwitch();
         let { currentPage } = storeToRefs(useAppSwitch);
-        await this.getGoodsList(currentPage.value)
+        this.getGoodsList(currentPage.value)
     },
     //删除商品
     async deleteGoods(val:any ){
@@ -61,7 +63,7 @@ const goods = defineStore("/goods", {
         //重新请求完整数据
         const useAppSwitch: any = appSwitch();
         let { currentPage } = storeToRefs(useAppSwitch);
-        await this.getGoodsList(currentPage.value)
+        this.getGoodsList(currentPage.value)
     },
   },
 })

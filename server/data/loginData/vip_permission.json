@@ -28,7 +28,8 @@
         "parentId": 1,
         "meta":{
           "title":"产品列表",
-          "icon": "List"
+          "icon": "List",
+          "keepAlive": true
         }
       },
       {
@@ -39,7 +40,8 @@
         "parentId": 1,
         "meta":{
           "title":"产品分类",
-          "icon": "Grid"
+          "icon": "Grid",
+          "keepAlive": true
         }
       }
     ]

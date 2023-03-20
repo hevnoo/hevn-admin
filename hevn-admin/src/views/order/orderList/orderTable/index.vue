@@ -36,7 +36,7 @@
     </el-table-column>
   </el-table>
   <!-- 清空与批量删除 -->
-  <div style="margin-top: 10px; margin-left: 5px">
+  <div style="margin-top: 15px; margin-left: 5px">
     <el-button size="small" type="primary" plain @click="toggleSelection()"
       >清空</el-button
     >
@@ -133,12 +133,12 @@ const SelectionChange = (val: any) => {};
 }
 //表头
 ::v-deep th {
-  height: 42px;
+  // height: 42px;
   background-color: #f5fafe !important;
 }
 //每一行
 ::v-deep .el-table__row {
-  height: 43px;
+  // height: 43px;
 }
 .logInput {
   width: 70%;

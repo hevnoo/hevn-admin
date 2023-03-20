@@ -28,7 +28,8 @@
         "parentId": 1,
         "meta":{
           "title":"产品列表",
-          "icon": "List"
+          "icon": "List",
+          "keepAlive": true
         }
       },
       {
@@ -39,7 +40,8 @@
         "parentId": 1,
         "meta":{
           "title":"产品分类",
-          "icon": "Grid"
+          "icon": "Grid",
+          "keepAlive": true
         }
       }
     ]
@@ -62,7 +64,8 @@
         "parentId": 2,
         "meta":{
           "title":"订单列表",
-          "icon": "List"
+          "icon": "List",
+          "keepAlive": true
         }
       },
       {
@@ -73,7 +76,8 @@
         "parentId": 2,
         "meta":{
           "title":"汇总清单",
-          "icon": "Tickets"
+          "icon": "Tickets",
+          "keepAlive": true
         }
       }
     ]
@@ -96,7 +100,8 @@
         "parentId": 3,
         "meta":{
           "title":"页面类型",
-          "icon": "List"
+          "icon": "List",
+          "keepAlive": true
         }
       },
       {
@@ -107,7 +112,8 @@
         "parentId": 3,
         "meta":{
           "title":"产品页面",
-          "icon": "List"
+          "icon": "List",
+          "keepAlive": true
         }
       }
     ]

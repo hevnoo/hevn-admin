@@ -1,0 +1,109 @@
+// .views-enter-active {
+//     animation-name: initView;
+//     animation-duration: 0.5s;
+//     animation-timing-function: ease-out; //linear线性,渐变
+//     animation-iteration-count: 1; //播放的次数，infinite一直重复，默认是1
+//     animation-direction: normal; //动画播放的方向,alternate逆播放
+//     animation-fill-mode: forwards; //动画结束后保持forwards终点状态，或变为backwards起点状态
+//   }
+  .views-leave-active {
+    animation-name: initView-leave;
+    animation-duration: 0.5s;
+    animation-timing-function: ease-out; //linear线性,渐变
+    animation-iteration-count: 1; //播放的次数，infinite一直重复，默认是1
+    animation-direction: normal;
+    animation-fill-mode: backwards;
+  }
+
+//vue动画，to开始，from结束
+//1.进入阶段
+// .views-enter {
+//     opacity: 0;
+//     transform: translateX(-20px);
+//   }
+//   .views-enter-to {
+//     opacity: 1;
+//     transform: translateX(0);
+//   }
+//   .views-enter-active {
+//     transition: all 0.5s ease-out;
+//   }
+//   //2.离开阶段
+//   .views-leave {
+//     opacity: 1;
+//   }
+//   .views-leave-to {
+//     opacity: 0;
+//   }
+//   .views-leave-active {
+//     transition: all 0.5s ease-out;
+//   }
+  
+  
+  //css动画
+  .view {
+    /* 动画 */
+    // animation: move 70s linear forwards infinite;
+    background-position: 0 0%;
+    animation-name: initView;
+    animation-duration: 0.8s;
+    animation-timing-function: ease-out; //linear线性,渐变
+    animation-iteration-count: 1; //播放的次数，infinite一直重复，默认是1
+    animation-direction: normal; //动画播放的方向,alternate逆播放
+    animation-fill-mode: forwards; //动画结束后保持forwards终点状态，或变为backwards起点状态
+    // background-size: 100%;
+  }
+//   .view-leave {
+//     /* 动画 */
+//     // animation: move 70s linear forwards infinite;
+//     background-position: 0 0%;
+//     animation-name: initView-leave;
+//     animation-duration: 0.5s;
+//     animation-timing-function: ease-out; //linear线性,渐变
+//     animation-iteration-count: 1; //播放的次数，infinite一直重复，默认是1
+//     animation-direction: normal; //动画播放的方向,alternate逆播放
+//     animation-fill-mode: forwards; //动画结束后保持forwards终点状态，或变为backwards起点状态
+//     // background-size: 100%;
+//   }
+  
+  @keyframes initView {
+    0% {
+    //   transform: translateX(-20px);
+    //   transform: scale(0.99);
+      opacity: 0;
+    }
+    50% {
+      opacity: 0.5;
+    }
+    80%{
+        opacity: 0.8;
+    }
+    100% {
+    //   transform: translateX(0);
+    //   transform: scale(1);
+      opacity: 1;
+    }
+  }
+  @keyframes initView-leave {
+    0% {
+      transform: translateX(0);
+      // transform: scale(0.99);
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.4;
+    }
+    100% {
+      transform: translateX(20px);
+      // transform: scale(1);
+      opacity: 0;
+    }
+  }
+  
+  //vue动画详解：
+  //v-enter：就是进入时候的第一帧
+  //v-enter-to：就是进入时候的第二帧（这帧结束进入效果结束）
+  //v-enter-active：就是第一帧和第二帧中间的执行过程
+  //v-leave：就是离开时候的第一帧
+  //v-leave-to：就是离开时候的第二帧（这帧结离开效果结束）
+  //v-leave-active：就是第一帧和第二帧中间的执行过程

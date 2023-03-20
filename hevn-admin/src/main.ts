@@ -21,6 +21,8 @@ import i18n from '@/i18n'
 import '@/assets/iconfont/iconfont.css'
 //自定义指令
 import directives from '@/directives/index'
+//动画库
+import 'animate.css';
 
 const pinia = createPinia()
 const app = createApp(App)

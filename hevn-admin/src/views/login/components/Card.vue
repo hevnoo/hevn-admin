@@ -27,10 +27,10 @@ import { useRoute, useRouter, onBeforeRouteLeave } from "vue-router";
   background-position: 0 0%;
   animation-name: move;
   animation-duration: 70s;
-  animation-iteration-count: infinite; //重复
-  animation-direction: alternate;
-  animation-fill-mode: forwards;
-  animation-timing-function: linear; //线性
+  animation-timing-function: linear; //线性,渐变
+  animation-iteration-count: infinite; //播放的次数，infinite一直重复，默认是1
+  animation-direction: alternate; //动画播放的方向,alternate逆播放
+  animation-fill-mode: forwards; //动画结束后保持forwards终点状态，或变为backwards起点状态
   background-size: 100%;
 }
 .text {

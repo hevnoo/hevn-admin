@@ -27,13 +27,14 @@ const service = axios.create({
 service.interceptors.request.use(
   (config) => {
     const useLogin: any = login()
-    let { token } = useLogin
+    let { token, refreshToken } = useLogin
     if (token && storage.getItem('token')) {
       //是否登录超时diffTokenTime()
       if (diffTokenTime()) {
-        useLogin.logout()
+        // useLogin.logout()
+        // useLogin.setRefreshToken(refreshToken)
         ElMessage.error('登陆超时，请重新登录')
-        return Promise.reject(new Error('客户端 token 时间失效了'))
+        // return Promise.reject(new Error('客户端 token 时间失效了'))
       }
     }
     config.headers['Authorization'] = `Bearer ${token}`
@@ -47,6 +48,7 @@ service.interceptors.request.use(
 // //响应拦截,依据响应结果进行提示。
 service.interceptors.response.use(
   (response) => {
+    // console.log(response)
     if (response.data.status === 200 || response.data.status === 201) {
       return response
     } else {
@@ -55,13 +57,11 @@ service.interceptors.response.use(
     }
   },
   (error) => {
+    // console.log(error)
     error.response && ElMessage.error(error.response.data)
     return Promise.reject(new Error(error.response.data))
   }
-  //响应拦截的response就是后端传递的数据！
-  //1、如果状态码符合，则将response返回，客户端就能正常拿到数据；
-  //2、如果状态码不符合，则不返回，客户端也就不能拿到数据。
-  //成功提示暂时不在响应拦截里执行。
+
 )
 
 export default service
