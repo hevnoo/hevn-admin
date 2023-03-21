@@ -100,7 +100,5 @@ router.afterEach((to, from) => {
   // }
   //标签
   document.title = `Admin | ${to.meta.title}`;
-  // if(from == ''){
-  //   console.log(from);
-  // }
+
 })

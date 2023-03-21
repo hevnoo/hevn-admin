@@ -3,7 +3,14 @@ var router = express.Router();
 var querySql = require("../db/index");
 // 用于生成jwt字符串
 const jwt = require("jsonwebtoken");
-const { PWD_SALT, PRIVATE_KEY, EXPIRESD } = require("../utils/constant");
+const {
+  PWD_SALT,
+  PRIVATE_KEY,
+  EXPIRESD,
+  refresh_time,
+} = require("../utils/constant");
+const { part_verify } = require("../middleware/modules/token");
+const { setToken } = require("../utils/modules/useJWT");
 const { md5, upload } = require("../utils/index");
 const adminPermission = require("../data/loginData/admin_permission.json");
 const vipPermission = require("../data/loginData/vip_permission.json");
@@ -44,30 +51,33 @@ router.post("/login", async (req, res, next) => {
       if (!result || result.length === 0) {
         res.send({ status: 400, msg: "账号或者密码不正确" });
       } else {
-        // 调用jsonwebtoken包提供的sign()方法，将用户信息加密成字符串，并响应给客户端！
-        // var privateKey = fs.readFileSync("private.key");
-        let token = jwt.sign({ username }, PRIVATE_KEY, {
-          expiresIn: EXPIRESD,
-        });
+        let userInfo = await querySql(
+          "select id,username,nickname,head_img,role from user where username = ? and password = ?",
+          [username, password]
+        );
+        // token过期后，需要靠refreshToken来重新获取token。
+        let token = setToken(username).token;
+        let refreshToken = setToken(username).refreshToken;
         if (username === "admin" || role === "admin") {
           //分权限，如果是admin，那就发送admin的标识，，否则发普通vip标识。
-          // token过期后，需要靠refreshToken来重新获取token。这里赋值username
           res.send({
             status: 200,
             msg: "登录成功",
             token,
+            refreshToken,
             role,
-            expiresIn: EXPIRESD,
-            refreshToken: username,
+            expiresIn: refresh_time,
+            userInfo,
           });
         } else {
           res.send({
             status: 200,
             msg: "登录成功",
             token,
+            refreshToken,
             role,
-            expiresIn: EXPIRESD,
-            refreshToken: username,
+            expiresIn: refresh_time,
+            userInfo,
           });
         }
       }
@@ -79,16 +89,11 @@ router.post("/login", async (req, res, next) => {
 });
 
 //刷新token的接口，用于无感登录。
-router.post("/refreshToken", (req, res, next) => {
-  let { refreshToken } = req.body;
-  let username = req.auth || refreshToken;
+router.post("/refreshToken", part_verify, (req, res, next) => {
+  let { username } = req.body;
   try {
-    if (refreshToken) {
-      let token = jwt.sign({ username }, PRIVATE_KEY, {
-        expiresIn: EXPIRESD,
-      });
-      res.send({ status: 200, msg: "刷新token成功", token });
-    }
+    let token = setToken(username).token;
+    res.send({ status: 200, msg: "刷新token成功", token });
   } catch (e) {
     console.log(e);
     next(e);

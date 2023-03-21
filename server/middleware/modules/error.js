@@ -18,22 +18,14 @@ const mw_err_authToken = (err, req, res, next) => {
   if (err) {
     res.status(500).send({ status: "fail", msg: "500" });
   }
-  return;
 };
-module.exports.mw_err_authToken = mw_err_authToken;
 
 //验证token！！！是否有效
-const mw_err_verifyToken = async (err, req, res, next) => {
-  //获取header中的token，并验证
-  if (req.headers.authorization) {
-    const flag = await verifyToken(req.headers.authorization);
-    //验证失败
-    if (!flag) {
-      await res.send({ status: 4003, msg: "token验证失败" });
-    }
-  }
-  //验证成功继续
-  next();
-  return;
+const mw_err_verifyToken = (err, req, res, next) => {
+  console.log("获取错误：：", err);
 };
-module.exports.mw_err_verifyToken = mw_err_verifyToken;
+
+module.exports = {
+  mw_err_authToken,
+  mw_err_verifyToken,
+};

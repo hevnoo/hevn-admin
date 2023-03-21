@@ -12,6 +12,7 @@ const login = defineStore("/login", {
     menu: storage.getItem('menu') || [],
     userInfo: storage.getItem("userInfo") || "{}",
     expiresIn: storage.getItem('expiresIn') || 2 * 60 * 60 * 1000,
+    tokenTime: storage.getItem('tokenTime') || 0, //记录登录时间
     refreshToken: storage.getItem('refreshToken') || ''
   }),
   getters: {},
@@ -32,8 +33,10 @@ const login = defineStore("/login", {
         this.role = data.role
         storage.setItem('role', data.role)
         this.expiresIn = data.expiresIn
+        storage.setItem('userInfo', data.userInfo)
+        this.userInfo = data.userInfo
         storage.setItem('expiresIn', data.expiresIn)
-        this.refreshToken = data.expiresIn
+        this.refreshToken = data.refreshToken
         storage.setItem('refreshToken', data.refreshToken)
         setTimeout(()=>{
           router.push('/')
@@ -49,7 +52,9 @@ const login = defineStore("/login", {
       const { data } = await refreshTokenApi(val)
       this.token = data.token
       storage.setItem('token', data.token)
-      ElMessage.success(data.msg)
+      ElMessage.success()
+      storage.removeItem('Authorization_token')
+      //在这里重新发起未完成的请求
     },
     //注册
     async setRegister(val :any){

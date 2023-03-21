@@ -1,0 +1,8 @@
+[
+    "/user/getMenu",
+    "/user/login",
+    "/user/refreshToken",
+    "/user/register",
+    "/goods/upImg",
+    "/user/upload"
+]

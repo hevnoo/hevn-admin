@@ -28,19 +28,17 @@ service.interceptors.request.use(
   (config) => {
     const useLogin: any = login()
     let { token, refreshToken } = useLogin
-    if (token && storage.getItem('token')) {
-      //是否登录超时diffTokenTime()
-      if (diffTokenTime()) {
-        // useLogin.logout()
-        // useLogin.setRefreshToken(refreshToken)
-        ElMessage.error('登陆超时，请重新登录')
-        // return Promise.reject(new Error('客户端 token 时间失效了'))
-      }
+    if(storage.getItem('Authorization_token') == `Bearer ${refreshToken}`){
+      config.headers['Authorization'] = `Bearer ${refreshToken}`
+      return config
+    }else{
+      config.headers['Authorization'] = `Bearer ${token}`
+      return config
     }
-    config.headers['Authorization'] = `Bearer ${token}`
-    return config
+    
   },
   (error) => {
+    ElMessage.error('错误')
     return Promise.reject(new Error(error))
   }
 )
@@ -52,16 +50,40 @@ service.interceptors.response.use(
     if (response.data.status === 200 || response.data.status === 201) {
       return response
     } else {
-      ElMessage.error(response.data.msg)
+      if(response.data.msg){
+        ElMessage.error(response.data.msg + ',' + response.data.status)
+        if(response.data.status == 411){
+          //411是后端设置的中间件判断token过期状态
+          const useLogin: any = login()
+          useLogin.logout()
+        }
+      }else{
+        ElMessage.error('未知状态错误')
+      }
       return Promise.reject(new Error(response.data.msg))
     }
   },
+  //显示错误，例如：401
   (error) => {
-    // console.log(error)
-    error.response && ElMessage.error(error.response.data)
+    //当状态为token过期或者失效状态时，用refreshToken重新请求一个新token。
+    if(error.response.data.status == 401){
+      const { config } = error
+      const useLogin: any = login()
+      let { token, refreshToken, userInfo } = useLogin
+      if(refreshToken && storage.getItem('refreshToken')){
+        config.headers['Authorization'] = `Bearer ${refreshToken}`
+        // console.log('***',config.headers['Authorization'])
+        storage.setItem('Authorization_token', `Bearer ${refreshToken}`)
+        useLogin.setRefreshToken(userInfo.username)
+      }
+    }
+    // ElMessage.error(error.response.statusText + error.response.data.status)
+    console.log(error.response)
     return Promise.reject(new Error(error.response.data))
   }
 
 )
-
+// 出现401时，就把refreshToken保存到本地，然后再调用pinia里的刷新token接口，
+// 一旦接口调用成功就在pinia接口内移除本地的Authorization_token，这样就不影响其他请求选择token请求头了。
+// 只有刷新token这个地方要用refreshToken，其他请求都是token。
 export default service
