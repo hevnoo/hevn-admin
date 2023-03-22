@@ -12,7 +12,6 @@ const login = defineStore("/login", {
     menu: storage.getItem('menu') || [],
     userInfo: storage.getItem("userInfo") || "{}",
     expiresIn: storage.getItem('expiresIn') || 2 * 60 * 60 * 1000,
-    tokenTime: storage.getItem('tokenTime') || 0, //记录登录时间
     refreshToken: storage.getItem('refreshToken') || ''
   }),
   getters: {},
@@ -42,7 +41,7 @@ const login = defineStore("/login", {
           router.push('/')
         },500)
         this.setMenu(data.role)
-        setTokenTime() //记录登录时间
+        // setTokenTime()
       } catch (error) {
         console.log(error)
       }

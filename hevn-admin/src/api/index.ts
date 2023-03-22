@@ -15,8 +15,7 @@ const config = {
 	withCredentials: true
 };
 
-// // axios.defaults.baseURL = 'http://127.0.0.1:7171/'
-// //创建实例,也可以用上面的default.baseURL。
+// //创建实例
 const service = axios.create({
   //   baseURL: process.env.VUE_APP_BASE_API,
   baseURL: 'http://127.0.0.1:7171',
