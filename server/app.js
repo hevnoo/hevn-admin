@@ -23,6 +23,7 @@ let {
 //引入路由
 var userRouter = require("./routes/user");
 var articleRouter = require("./routes/article");
+var articleClassRouter = require("./routes/articleClass");
 var commentRouter = require("./routes/comment");
 var goodsRouter = require("./routes/goods");
 var goodsClassRouter = require("./routes/goodsClass");
@@ -63,6 +64,7 @@ app.use(function (req, res, next) {
 //注册路由
 app.use("/user", userRouter);
 app.use("/article", articleRouter);
+app.use("/articleClass", articleClassRouter);
 app.use("/comment", commentRouter);
 app.use("/goods", goodsRouter);
 app.use("/goodsClass", goodsClassRouter);

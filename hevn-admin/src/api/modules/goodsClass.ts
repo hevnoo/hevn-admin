@@ -1,4 +1,4 @@
-import http from "@/api";
+import http from "@/utils/request/index";
 
 //添加类别
 export const addGoodsClassApi = (data: any) => {

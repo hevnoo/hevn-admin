@@ -25,7 +25,16 @@ export const staticRouter = [
 			component: () => import('@/components/error/403.vue')
 		  }
 		]
-	  },
+	},
+	//others components:
+	// {
+	// 	path: '/article/articleDetail',
+	// 	name: 'articleDetail',
+	// 	components: () => import('@/components/articleDetail/index.vue'),
+	// 	mata: {
+	// 		title: '文章详情'
+	// 	}
+	// }
 ]
 
 

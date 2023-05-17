@@ -52,6 +52,7 @@ onBeforeRouteLeave((to, from) => {
 
 <style lang="scss" scoped>
 .wrapper-orderList {
+  min-height: 100%;
   background-color: rgba(255, 255, 255, 0.9);
   border-radius: 8px;
   box-shadow: 0 2px 12px 0 rgb(0 0 0 / 10%);

@@ -131,6 +131,10 @@ const mixed = (name: string) => {
       }
     }
   });
+  //额外添加的路由名
+  if (name == "articleDetail") {
+    return "文章详情页";
+  }
 
   return menuTitle[0];
 };

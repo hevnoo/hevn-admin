@@ -8,7 +8,6 @@ import { storeToRefs } from "pinia";
 import  { appSwitch } from '@/store'
 
 
-
 const goods = defineStore("/goods", {
   state: () => ({
     goodsList: [],

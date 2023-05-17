@@ -11,13 +11,12 @@
         <el-main>
           <!-- vue动画，内容展示 -->
           <!-- <router-view v-slot="{ Component }"
-            ><Transition name="views" mode="out-in" appear>
+            ><Transition name="fade" mode="out-in" appear>
               <keep-alive>
                 <component :is="Component" />
               </keep-alive> </Transition
           ></router-view> -->
           <router-view class="view"></router-view>
-          <!-- <router-view :class="isLeave ? 'view-leave' : 'view'"></router-view> -->
         </el-main>
         <el-footer>
           <Footers></Footers>

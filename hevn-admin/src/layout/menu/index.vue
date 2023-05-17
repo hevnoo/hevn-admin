@@ -12,7 +12,7 @@
       <img src="@/assets/img/logo/aHeader.png" alt="" />
       <div class="logo-name" v-if="!isClose">{{ $t("menu.logo") }}</div>
     </header>
-    <template v-for="(item, index) in menu" :key="item.id">
+    <template v-for="(item, index) in (menu as any[])" :key="item.id">
       <el-menu-item
         v-if="!item.children"
         :index="item.path"
@@ -28,7 +28,7 @@
           <span>{{ item.meta.title }}</span>
         </template>
         <el-menu-item
-          v-for="(res, i) in item.children"
+          v-for="(res, i) in (item.children as any[])"
           :key="res.id"
           :index="res.path"
           @click="getName(res.name, res.component, i)"
@@ -49,6 +49,7 @@ const route = useRoute();
 const router = useRouter();
 const useLogin: any = login();
 let { token, role, menu } = storeToRefs(useLogin);
+// menu.value as Array<object>;
 const useAppSwitch: any = appSwitch();
 let { isClose, breadKeys } = storeToRefs(useAppSwitch);
 //获取当前路径

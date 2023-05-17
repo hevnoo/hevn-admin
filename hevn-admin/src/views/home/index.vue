@@ -1,5 +1,7 @@
 <template>
-  <div>Home</div>
+  <div class="w-home">
+    <img src="@/assets/img/bg/welcome.png" alt="" />
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -14,4 +16,13 @@ const route = useRoute();
 const router = useRouter();
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.w-home {
+  img {
+    width: 100%;
+    height: 100%;
+    // background-size: cover;
+    background-repeat: no-repeat;
+  }
+}
+</style>

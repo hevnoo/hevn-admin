@@ -1,6 +1,7 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
 import { createPinia } from 'pinia'
 import { staticRouter, errorRouter, notFoundRouter } from '../router/modules/staticRouter'
+import { articleDetailRouter } from './modules/otherAddRoter'
 import { asyncRouter } from '@/router/modules/asyncRouter'
 import { login } from '@/store' 
 import { storeToRefs } from "pinia";
@@ -45,6 +46,8 @@ const getMenu = ()=>{
         })
         }
     })
+    //额外添加的其他路由
+    router.addRoute('article', articleDetailRouter)
     // 404路由,放在最后添加
     router.addRoute(notFoundRouter);
     } else {
@@ -53,6 +56,6 @@ const getMenu = ()=>{
     }
 }
 getMenu()
-  
+
 
   export default router

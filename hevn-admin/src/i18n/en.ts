@@ -16,6 +16,7 @@ export default {
     setArticle:'setArticle',
     articleList:'articleList',
     articleClass:'articleClass',
+    articleDetail: 'articleDetail',
     comment:'comment',
     commentList:'commentList',
     permission:'permission',

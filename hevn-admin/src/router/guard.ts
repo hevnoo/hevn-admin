@@ -4,6 +4,8 @@ import { ElMessage } from 'element-plus'
 import storage from '@/utils/storage'
 import { login } from '@/store'
 import { notFoundRouter } from '@/router/modules/staticRouter'
+import { articleDetailRouter } from './modules/otherAddRoter'
+
 import { diffTokenTime } from '@/utils/auth'
 
 //解决三级此单无法被keep-alive缓存！
@@ -62,6 +64,9 @@ router.beforeEach((to, from, next) => {
             })
           }
         })
+        //额外添加的其他路由
+        router.addRoute('article', articleDetailRouter)
+
         // 404路由,放在最后添加
         router.addRoute(notFoundRouter);
         //addRoute end--------------------------------------

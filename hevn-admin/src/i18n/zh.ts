@@ -16,6 +16,7 @@ export default {
     setArticle:'创建文章',
     articleList:'文章列表',
     articleClass:'文章分类',
+    articleDetail: '文章详情页',
     comment:'评论管理',
     commentList:'评论列表',
     permission:'权限管理',

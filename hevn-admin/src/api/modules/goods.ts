@@ -1,4 +1,4 @@
-import http from "@/api";
+import http from "@/utils/request/index";
 
 //添加商品
 export const addGoodsApi = (data: any) => {

@@ -6,39 +6,39 @@
 //     animation-direction: normal; //动画播放的方向,alternate逆播放
 //     animation-fill-mode: forwards; //动画结束后保持forwards终点状态，或变为backwards起点状态
 //   }
-  .views-leave-active {
-    animation-name: initView-leave;
-    animation-duration: 0.5s;
-    animation-timing-function: ease-out; //linear线性,渐变
-    animation-iteration-count: 1; //播放的次数，infinite一直重复，默认是1
-    animation-direction: normal;
-    animation-fill-mode: backwards;
-  }
+  // .views-leave-active {
+  //   animation-name: initView-leave;
+  //   animation-duration: 0.5s;
+  //   animation-timing-function: ease-out; //linear线性,渐变
+  //   animation-iteration-count: 1; //播放的次数，infinite一直重复，默认是1
+  //   animation-direction: normal;
+  //   animation-fill-mode: backwards;
+  // }
 
 //vue动画，to开始，from结束
 //1.进入阶段
-// .views-enter {
-//     opacity: 0;
-//     transform: translateX(-20px);
-//   }
-//   .views-enter-to {
-//     opacity: 1;
-//     transform: translateX(0);
-//   }
-//   .views-enter-active {
-//     transition: all 0.5s ease-out;
-//   }
-//   //2.离开阶段
-//   .views-leave {
-//     opacity: 1;
-//   }
-//   .views-leave-to {
-//     opacity: 0;
-//   }
-//   .views-leave-active {
-//     transition: all 0.5s ease-out;
-//   }
-  
+.fade-enter-from {
+    opacity: 0;
+    transform: translateX(-20px);
+}
+.fade-enter-to {
+  opacity: 1;
+  transform: translateX(0);
+}
+.fade-enter-active {
+  transition: all 0.5s ease-out;
+}
+//2.离开阶段
+.fade-leave-from {
+  opacity: 1;
+}
+.fade-leave-to {
+  opacity: 0;
+}
+.fade-leave-active {
+  transition: all 0.5s ease-out;
+}
+
   
   //css动画
   .view {

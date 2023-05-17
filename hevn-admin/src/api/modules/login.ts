@@ -1,4 +1,4 @@
-import http from "@/api";
+import http from "@/utils/request/index";
 
 // * 用户登录接口
 export const loginApi = (data: any) => {

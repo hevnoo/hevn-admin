@@ -1,0 +1,36 @@
+{
+    "id": 3,
+    "name": "page",
+    "path": "/page",
+    "component":"/page/index.vue",
+    "meta":{
+      "title":"页面管理",
+      "icon": "Menu"
+  },
+  "children": [
+    {
+      "id": 3.1,
+      "name": "pageClass",
+      "path": "/page/pageClass",
+      "component":"/page/pageClass/index.vue",
+      "parentId": 3,
+      "meta":{
+        "title":"页面类型",
+        "icon": "List",
+        "keepAlive": true
+      }
+    },
+    {
+      "id": 3.2,
+      "name": "goodsPage",
+      "path": "/page/goodsPage",
+      "component":"/page/goodsPage/index.vue",
+      "parentId": 3,
+      "meta":{
+        "title":"产品页面",
+        "icon": "List",
+        "keepAlive": true
+      }
+    }
+  ]
+}

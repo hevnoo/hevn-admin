@@ -3,7 +3,7 @@ module.exports = {
   //密钥，可自定义
   PRIVATE_KEY: "hevn_admin",
   //token有效时间
-  EXPIRESD: "2h",
+  EXPIRESD: "10h",
   refresh_time: "48h",
 };
 

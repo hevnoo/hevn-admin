@@ -3,6 +3,7 @@
     "/user/login",
     "/user/refreshToken",
     "/user/register",
+    "/user/upload",
     "/goods/upImg",
-    "/user/upload"
+    "/article/upCoverImg"
 ]

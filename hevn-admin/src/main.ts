@@ -23,6 +23,12 @@ import '@/assets/iconfont/iconfont.css'
 import directives from '@/directives/index'
 //动画库
 import 'animate.css';
+//引入QuillEditor富文本编辑器
+import { QuillEditor } from '@vueup/vue-quill'
+import '@vueup/vue-quill/dist/vue-quill.snow.css';
+//编辑器
+
+
 
 const pinia = createPinia()
 const app = createApp(App)
@@ -38,6 +44,8 @@ Object.keys(Icons).forEach(key => {
 });
 app.use(i18n)
 app.use(directives)
+app.component('QuillEditor', QuillEditor)
+
 
 app.mount('#app')
 
